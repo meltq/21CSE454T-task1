@@ -3,8 +3,6 @@ import os
 import matplotlib.pyplot as plt
 
 # --- 1. SETUP PATHS ---
-# Path to the folder containing the images.
-# IMPORTANT: Replace this with the actual path to your 'images' folder.
 IMAGE_DIR = 'data/without_mask/'
 
 # Path to the pre-trained Haar Cascade XML file.
@@ -25,7 +23,6 @@ if face_cascade.empty():
 # Get a list of all image files in the directory.
 try:
     image_files = [f for f in os.listdir(IMAGE_DIR) if f.endswith(('.png', '.jpg', '.jpeg'))]
-    # We'll just process a few images for this demonstration to keep it quick.
     images_to_process = image_files[:6]
     if not images_to_process:
         print(f"No images found in the directory: {IMAGE_DIR}")
@@ -61,8 +58,6 @@ for i, filename in enumerate(images_to_process):
     
     # --- 5. DETECT FACES ---
     # Use the classifier's detectMultiScale function.
-    # scaleFactor: How much the image size is reduced at each image scale.
-    # minNeighbors: How many neighbors each candidate rectangle should have to retain it.
     faces = face_cascade.detectMultiScale(
         gray_image,
         scaleFactor=1.1,
@@ -76,7 +71,6 @@ for i, filename in enumerate(images_to_process):
     # Loop through the coordinates (x, y, w, h) for each detected face.
     for (x, y, w, h) in faces:
         # Draw a green rectangle on the original *color* image.
-        # Arguments: image, top-left corner, bottom-right corner, color (in BGR), thickness
         cv2.rectangle(image_rgb, (x, y), (x+w, y+h), (0, 255, 0), 3)
 
     # --- 7. DISPLAY THE RESULT ---
